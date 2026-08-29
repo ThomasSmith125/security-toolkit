@@ -1,7 +1,7 @@
 
 import socket
-import time
-
+import argparse
+import sys
 
 def parse_ports(port_string):
 
@@ -42,15 +42,6 @@ def parse_ports(port_string):
                 raise ValueError("Port invalid")
         return liste_3
 
-# Tests for valid inputs
-tests_invalides = ["70000", "0-10"]
-for t in tests_invalides:
-    try:
-        parse_ports(t)
-        print(f"ERREUR : {t} aurait dû lever une exception")
-    except ValueError as e:
-        print(f"OK — {t} a levé : {e}") 
-
 
 def scan_port(target, port, timeout):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -66,9 +57,27 @@ def scan_port(target, port, timeout):
     else:
         return False
 
-print(scan_port("cecinexistepas.invalid", 80, 1))
-print(scan_port("127.0.0.1", 445, 1))
-print(scan_port("127.0.0.1", 80, 1))
+def main():
+    parser = argparse.ArgumentParser(description="Port Scanner")
+    parser.add_argument("target", help="Target IP address or hostname")
+    parser.add_argument("--timeout", type=float, default=1.0, help="Timeout in seconds (default: 1.0)")
+    parser.add_argument("-p", "--ports", required=True, help="Ports to scan (e.g., 80,443,8080 or 1-1024)")
+    args = parser.parse_args()
+
+    try :
+        ports = parse_ports(args.ports)
+    except ValueError as e:
+        print(f"Erreur : {e}")
+        sys.exit(1)
+
+    print("Avertissement légal : Assurez-vous d'avoir l'autorisation de scanner les ports de la cible.")
+
+    for port in ports:
+        if scan_port(args.target, port, args.timeout):
+            print(f"Port {port} is open")
+
+if __name__ == "__main__":
+    main()
 
 
 
