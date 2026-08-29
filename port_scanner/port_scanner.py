@@ -1,4 +1,8 @@
 
+import socket
+import time
+
+
 def parse_ports(port_string):
 
     #FIRST CASE : 1-1024 CORRECT
@@ -38,11 +42,35 @@ def parse_ports(port_string):
                 raise ValueError("Port invalid")
         return liste_3
 
+# Tests for valid inputs
+tests_invalides = ["70000", "0-10"]
+for t in tests_invalides:
+    try:
+        parse_ports(t)
+        print(f"ERREUR : {t} aurait dû lever une exception")
+    except ValueError as e:
+        print(f"OK — {t} a levé : {e}") 
 
 
-print(parse_ports("1-1024"))
-print(parse_ports("80,443,8080"))
-print(parse_ports("80"))
-print(parse_ports("70000"))       
-print(parse_ports("0-10")) 
+def scan_port(target, port, timeout):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(timeout)
+    try:
+        resultat = sock.connect_ex((target, port))
+    except socket.gaierror:
+        sock.close()
+        return False
+    sock.close()
+    if resultat == 0:
+        return True
+    else:
+        return False
+
+print(scan_port("cecinexistepas.invalid", 80, 1))
+print(scan_port("127.0.0.1", 445, 1))
+print(scan_port("127.0.0.1", 80, 1))
+
+
+
+
     
