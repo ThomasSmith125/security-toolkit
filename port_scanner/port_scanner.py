@@ -67,10 +67,10 @@ def main():
     try :
         ports = parse_ports(args.ports)
     except ValueError as e:
-        print(f"Erreur : {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
-    print("Avertissement légal : Assurez-vous d'avoir l'autorisation de scanner les ports de la cible.")
+    print("Legal warning: Ensure you have authorization to scan the target's ports.")
 
     for port in ports:
         if scan_port(args.target, port, args.timeout):
