@@ -15,5 +15,5 @@ You can choose:
 - Which character types to include: uppercase letters, lowercase letters, numbers, and special characters
 
 ## Limitations (V1)
-## Limitations (V1)
+
 This version does not let users control how many characters of each type (uppercase, lowercase, numbers, special characters) appear in the generated password — only whether each type is included or not.
