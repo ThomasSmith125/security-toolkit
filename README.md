@@ -18,6 +18,10 @@ Scans a range of TCP ports on a given IP or hostname and reports which ones are 
 This tool allow you to test how strong are your passwords and help you to find stronger passwords for protecting your online account.
 [Password Checker](password_checker/README.md)
 
+### Password Generator
+This tool allow you to create strong passwords with multiple characters for protecting your online account.
+[Password Generator](password_generator/README.md)
+
 ## Possible improvements
 
 - Expand the common password list with a real breached-password dataset
